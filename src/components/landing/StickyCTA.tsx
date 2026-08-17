@@ -21,7 +21,7 @@
  *   />
  */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Gift, CheckCircle, Clock, Shield } from "lucide-react";
 
@@ -56,13 +56,13 @@ export function StickyCTA({
 }: StickyCTAProps) {
   const [visible, setVisible] = useState(false);
 
-  const scrollToForm = () => {
+  const scrollToForm = useCallback(() => {
     const form = document.getElementById(formId);
     if (form) {
       const y = form.getBoundingClientRect().top + window.pageYOffset - 150;
       window.scrollTo({ top: y, behavior: "smooth" });
     }
-  };
+  }, [formId]);
 
   useEffect(() => {
     const target = document.getElementById(formId);
@@ -81,7 +81,7 @@ export function StickyCTA({
     const handler = () => scrollToForm();
     window.addEventListener("scrollToForm", handler);
     return () => window.removeEventListener("scrollToForm", handler);
-  }, []);
+  }, [scrollToForm]);
 
   const badgeIcons = [Gift, CheckCircle, Clock];
 

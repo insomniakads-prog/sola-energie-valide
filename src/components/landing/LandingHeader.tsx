@@ -66,7 +66,7 @@ export function LandingHeader({
       <div className="container mx-auto flex h-16 md:h-28 lg:h-32 items-center justify-between px-4">
         {/* Logo principal */}
         <LogoWrapper
-          {...(logoProps as any)}
+          {...(logoProps as { href: string })}
           className="flex items-center gap-2 cursor-pointer"
           onClick={!logoLinked ? handleTrustLogoClick : undefined}
         >

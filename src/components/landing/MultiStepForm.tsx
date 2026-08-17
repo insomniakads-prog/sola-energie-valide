@@ -176,7 +176,6 @@ function InputField({
   maxLength,
   onChange,
   onBlur,
-  accentColor,
 }: {
   name: string;
   type?: string;

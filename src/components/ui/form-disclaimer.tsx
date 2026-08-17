@@ -17,11 +17,15 @@ interface FormDisclaimerProps {
 }
 
 export function FormDisclaimer({ siteName }: FormDisclaimerProps) {
+  const parPartenaires = siteName
+    ? `de la part de ${siteName} et de ses partenaires`
+    : "de la part de nos différents partenaires";
+
   return (
     <p className="text-[10px] leading-relaxed text-muted-foreground mt-4 text-center">
       En validant cette demande vous donnez votre accord pour être contacté par e-mail et/ou
-      téléphone et recevoir des détails sur votre éligibilité de la part de nos différents
-      partenaires pour le suivi de votre demande et la relation commerciale qui peut en découler.
+      téléphone et recevoir des détails sur votre éligibilité {parPartenaires} pour le suivi
+      de votre demande et la relation commerciale qui peut en découler.
       Vous disposez du droit de vous inscrire sur la liste d&apos;opposition au démarchage
       téléphonique{" "}
       <Link

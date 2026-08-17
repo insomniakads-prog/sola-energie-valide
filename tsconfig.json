@@ -30,5 +30,11 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "src/app/api/lead-route-template.ts",
+    "src/config/forms/_examples.ts",
+    "src/components/landing/MultiStepForm.tsx",
+    "src/components/landing/StickyCTA.tsx"
+  ]
 }

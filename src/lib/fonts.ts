@@ -1,29 +1,16 @@
-import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 
-// Police principale (corps de texte)
-export const fontSans = Inter({
+// Police titres — Poppins (display), reprise de la référence Soli
+export const fontDisplay = Poppins({
   subsets: ["latin"],
-  variable: "--font-sans",
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-poppins",
   display: "swap",
 });
 
-// Police titres (plus de caractère)
-export const fontHeading = Plus_Jakarta_Sans({
+// Police corps de texte — Inter
+export const fontBody = Inter({
   subsets: ["latin"],
-  variable: "--font-heading",
+  variable: "--font-inter",
   display: "swap",
 });
-
-// ============================================================
-// MODIFIER PAR CLIENT selon la charte graphique.
-//
-// Pour des polices custom (.woff2) :
-// import localFont from "next/font/local";
-// export const fontSans = localFont({
-//   src: "../../public/fonts/CustomFont.woff2",
-//   variable: "--font-sans",
-// });
-//
-// Pour les presets design-rules.md, ajouter ici
-// la font "drama" (serif italic) et "mono" du preset choisi.
-// ============================================================
