@@ -4,7 +4,15 @@ import { Home, KeyRound } from "lucide-react";
 import { siteConfig } from "@/lib/constants";
 import { heroPoints, ratings } from "@/lib/content";
 
-export function Hero() {
+export function Hero({
+  zone = siteConfig.zone,
+  ctaProprietaire = siteConfig.ctaProprietaire,
+  ctaLocataire = siteConfig.ctaLocataire,
+}: {
+  zone?: string;
+  ctaProprietaire?: string;
+  ctaLocataire?: string;
+} = {}) {
   return (
     <section className="relative overflow-hidden bg-ice pt-[clamp(48px,8vw,104px)] pb-[clamp(48px,7vw,88px)]">
       <div className="container-site">
@@ -12,7 +20,7 @@ export function Hero() {
           <div>
             <h1 className="mb-[22px] font-display text-[clamp(30px,3.8vw,46px)] leading-[1.08] font-extrabold text-ink">
               Votre installateur de panneaux solaires{" "}
-              <span className="whitespace-nowrap">en {siteConfig.zone}</span>
+              <span className="whitespace-nowrap">en {zone}</span>
             </h1>
 
             <ul className="mb-[26px] flex flex-col gap-2.5">
@@ -37,12 +45,12 @@ export function Hero() {
 
             <div className="mb-6 flex flex-wrap gap-3.5">
               <EstimationCta
-                href={siteConfig.ctaProprietaire}
+                href={ctaProprietaire}
                 icon={<Home className="size-5" strokeWidth={2.2} />}
                 label="Propriétaire"
               />
               <EstimationCta
-                href={siteConfig.ctaLocataire}
+                href={ctaLocataire}
                 icon={<KeyRound className="size-5" strokeWidth={2.2} />}
                 label="Locataire"
               />

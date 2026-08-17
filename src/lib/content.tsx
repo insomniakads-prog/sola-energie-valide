@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 // ============================================================
 // CONTENU DE LA LANDING — Sola Énergie
 //
@@ -109,14 +111,16 @@ export const testimonials = [
     name: "A. et N. Martin", // ⚠️ À VALIDER
     meta: "9 kWc · Yvelines",
     avatar: "warm" as const,
+    rating: 5 as const,
   },
   {
     quote:
-      "« Un interlocuteur unique, un chef de chantier présent le jour de la pose et deux poseurs salariés de l'entreprise. Au vu du nombre de sociétés douteuses sur ce métier, je recommande. »",
+      "« Un interlocuteur unique, un chef de chantier présent le jour de la pose et deux poseurs salariés de l'entreprise. Au vu du nombre de sociétés douteuses sur ce métier, je recommande. Seul bémol, le premier rendez-vous a mis un peu de temps à être confirmé. »",
     initials: "FP",
     name: "Frédéric P.", // ⚠️ À VALIDER
     meta: "Particulier · Essonne",
     avatar: "navy" as const,
+    rating: 4 as const,
   },
   {
     quote:
@@ -125,6 +129,7 @@ export const testimonials = [
     name: "Laurent K.", // ⚠️ À VALIDER
     meta: "Particulier · Val-d'Oise",
     avatar: "blue" as const,
+    rating: 5 as const,
   },
   {
     quote:
@@ -133,6 +138,7 @@ export const testimonials = [
     name: "M. Delaunay", // ⚠️ À VALIDER
     meta: "9 kWc + batterie",
     avatar: "warm" as const,
+    rating: 5 as const,
   },
   {
     quote:
@@ -141,6 +147,7 @@ export const testimonials = [
     name: "Pierre-J. Maisonneuve", // ⚠️ À VALIDER
     meta: "Photovoltaïque · Seine-et-Marne",
     avatar: "navy" as const,
+    rating: 5 as const,
   },
   {
     quote:
@@ -149,6 +156,7 @@ export const testimonials = [
     name: "Daniel T.", // ⚠️ À VALIDER
     meta: "PV + stockage · Yvelines",
     avatar: "blue" as const,
+    rating: 5 as const,
   },
 ];
 
@@ -182,7 +190,14 @@ export const processSteps = [
 ];
 
 /* ---------- FAQ — ⚠️ À VALIDER (chiffres et partenariats) ---------- */
-export const faq = [
+export type FaqItem = {
+  num: string;
+  question: string;
+  reponseTexte: string;
+  answer: ReactNode;
+};
+
+export const faq: FaqItem[] = [
   {
     num: "01",
     question: "Comment savoir si je peux vous faire confiance ?",
@@ -290,3 +305,16 @@ export const faq = [
     ),
   },
 ];
+
+/**
+ * Clone la FAQ en remplaçant la réponse "zone d'intervention" (item 03)
+ * par la version régionale fournie — utilisé par les pages région.
+ */
+export function buildFaq(zoneAnswer: {
+  reponseTexte: string;
+  answer: ReactNode;
+}): FaqItem[] {
+  return faq.map((item) =>
+    item.num === "03" ? { ...item, ...zoneAnswer } : item
+  );
+}

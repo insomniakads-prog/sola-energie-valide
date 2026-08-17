@@ -2,12 +2,24 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, Phone, X } from "lucide-react";
 import { siteConfig } from "@/lib/constants";
+import { regions } from "@/lib/regions";
 import { Wordmark } from "@/components/ui/Wordmark";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const isLandingPage =
+    pathname === "/" || regions.some((r) => `/${r.slug}` === pathname);
+  const navItems = siteConfig.nav.map((item) => ({
+    ...item,
+    href:
+      isLandingPage && pathname !== "/"
+        ? item.href.replace(/^\/#/, `${pathname}#`)
+        : item.href,
+  }));
 
   return (
     <header className="sticky top-0 z-50 border-b border-ink/8 bg-white/95 backdrop-blur-sm">
@@ -19,7 +31,7 @@ export function SiteHeader() {
 
         {/* Nav desktop */}
         <nav className="hidden items-center gap-7 lg:flex">
-          {siteConfig.nav.map((item) => (
+          {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -56,7 +68,7 @@ export function SiteHeader() {
       {open && (
         <div className="border-t border-ink/8 bg-white md:hidden">
           <div className="container-site flex flex-col gap-1 py-4">
-            {siteConfig.nav.map((item) => (
+            {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}

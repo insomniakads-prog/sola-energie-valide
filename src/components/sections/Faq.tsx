@@ -1,7 +1,11 @@
 import { ChevronRight } from "lucide-react";
-import { faq } from "@/lib/content";
+import { faq as faqIdf, type FaqItem } from "@/lib/content";
 
-export function Faq() {
+export function Faq({
+  items = faqIdf,
+}: {
+  items?: FaqItem[];
+} = {}) {
   return (
     <section id="faq" className="section-y bg-paper">
       <div className="mx-auto w-full max-w-[1100px] px-[var(--gutter)]">
@@ -13,7 +17,7 @@ export function Faq() {
         </div>
 
         <div className="grid gap-3">
-          {faq.map((item) => (
+          {items.map((item) => (
             <details
               key={item.num}
               className="group self-start overflow-hidden rounded-2xl border border-ice bg-white transition-all duration-200 open:border-transparent open:shadow-md"

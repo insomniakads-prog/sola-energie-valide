@@ -11,6 +11,8 @@ import { siteConfig } from "@/lib/constants";
 import {
   FaqJsonLd,
   OrganisationJsonLd,
+  LocalBusinessJsonLd,
+  BreadcrumbListJsonLd,
 } from "@/components/seo/StructuredData";
 
 export const metadata: Metadata = {
@@ -33,6 +35,8 @@ export default function Home() {
     <>
       <OrganisationJsonLd />
       <FaqJsonLd />
+      <LocalBusinessJsonLd />
+      <BreadcrumbListJsonLd />
       <Hero />
       <TrustBand />
       <Proximity />

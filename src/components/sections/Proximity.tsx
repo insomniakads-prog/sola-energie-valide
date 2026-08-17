@@ -1,8 +1,20 @@
 import Image from "next/image";
 import { siteConfig } from "@/lib/constants";
-import { chantiers } from "@/lib/content";
+import { chantiers as chantiersIdf } from "@/lib/content";
+import { LocationMap } from "@/components/sections/LocationMap";
+import type { Chantier } from "@/lib/regions";
 
-export function Proximity() {
+export function Proximity({
+  zone = siteConfig.zone,
+  mapQuery = `${siteConfig.zone}, France`,
+  mapZoom = 8,
+  chantiers = chantiersIdf,
+}: {
+  zone?: string;
+  mapQuery?: string;
+  mapZoom?: number;
+  chantiers?: Chantier[];
+} = {}) {
   return (
     <section id="realisations" className="section-y bg-paper">
       <div className="container-site">
@@ -15,19 +27,17 @@ export function Proximity() {
             </h2>
             <p className="max-w-[460px] text-[15px] leading-[1.6] text-ink/70">
               {/* ⚠️ À VALIDER : nombre réel d'installations */}
-              Des centaines d&apos;installations réalisées en {siteConfig.zone}{" "}
+              Des centaines d&apos;installations réalisées en {zone}{" "}
               et départements limitrophes.
             </p>
           </div>
 
           <div className="relative aspect-[5/4] max-h-[520px] overflow-hidden rounded-[32px] border border-ink/10 bg-ice shadow-float">
             {/* ⚠️ À VALIDER : remplacer par la carte Google My Maps du client */}
-            <iframe
-              src="https://www.google.com/maps?q=%C3%8Ele-de-France,+France&z=8&output=embed"
-              title={`Carte des installations ${siteConfig.name} en ${siteConfig.zone}`}
-              loading="lazy"
-              allowFullScreen
-              className="size-full border-0"
+            <LocationMap
+              query={mapQuery}
+              zoom={mapZoom}
+              title={`Carte des installations ${siteConfig.name} en ${zone}`}
             />
           </div>
         </div>

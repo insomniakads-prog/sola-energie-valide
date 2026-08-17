@@ -1,5 +1,5 @@
 import { legalConfig, siteConfig } from "@/lib/constants";
-import { faq } from "@/lib/content";
+import { faq, type FaqItem } from "@/lib/content";
 
 /**
  * Données structurées de la page d'accueil.
@@ -25,7 +25,9 @@ function Json({ data }: { data: Record<string, unknown> }) {
 }
 
 /** Identité de l'éditeur et périmètre de service. */
-export function OrganisationJsonLd() {
+export function OrganisationJsonLd({
+  zone = siteConfig.zone,
+}: { zone?: string } = {}) {
   return (
     <Json
       data={{
@@ -48,21 +50,21 @@ export function OrganisationJsonLd() {
         },
         areaServed: {
           "@type": "AdministrativeArea",
-          name: siteConfig.zone,
+          name: zone,
         },
       }}
     />
   );
 }
 
-/** Les 6 questions de la page d'accueil, éligibles aux résultats enrichis. */
-export function FaqJsonLd() {
+/** Les 6 questions de la page (accueil ou région), éligibles aux résultats enrichis. */
+export function FaqJsonLd({ items = faq }: { items?: FaqItem[] } = {}) {
   return (
     <Json
       data={{
         "@context": "https://schema.org",
         "@type": "FAQPage",
-        mainEntity: faq.map((item) => ({
+        mainEntity: items.map((item) => ({
           "@type": "Question",
           name: item.question,
           acceptedAnswer: {
@@ -70,6 +72,69 @@ export function FaqJsonLd() {
             text: item.reponseTexte,
           },
         })),
+      }}
+    />
+  );
+}
+
+/**
+ * Établissement local et zone couverte.
+ * ⚠️ Volontairement SANS aggregateRating ni Review, même contrainte
+ * qu'OrganisationJsonLd (cf. commentaire ci-dessus).
+ */
+export function LocalBusinessJsonLd({
+  zone = siteConfig.zone,
+}: { zone?: string } = {}) {
+  return (
+    <Json
+      data={{
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        name: siteConfig.name,
+        url: siteConfig.url,
+        image: `${siteConfig.url}${siteConfig.ogImage}`,
+        telephone: siteConfig.phone,
+        email: legalConfig.editeur.email,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "18 rue des Ormes",
+          postalCode: "94220",
+          addressLocality: "Charenton-le-Pont",
+          addressCountry: "FR",
+        },
+        areaServed: {
+          "@type": "AdministrativeArea",
+          name: zone,
+        },
+      }}
+    />
+  );
+}
+
+/** Fil d'Ariane Accueil > {zone}, pour la page d'accueil et chaque page région. */
+export function BreadcrumbListJsonLd({
+  zone = siteConfig.zone,
+  slug = "",
+}: { zone?: string; slug?: string } = {}) {
+  return (
+    <Json
+      data={{
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Accueil",
+            item: siteConfig.url,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: zone,
+            item: `${siteConfig.url}${slug ? `/${slug}` : ""}`,
+          },
+        ],
       }}
     />
   );

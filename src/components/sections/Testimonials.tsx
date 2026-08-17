@@ -1,5 +1,6 @@
-import { ratings, testimonials } from "@/lib/content";
+import { ratings, testimonials as testimonialsIdf } from "@/lib/content";
 import { Carousel } from "@/components/ui/Carousel";
+import type { Testimonial } from "@/lib/regions";
 
 // Pastilles d'initiales : le jaune porte du texte ardoise,
 // les fonds foncés portent du blanc.
@@ -9,7 +10,20 @@ const avatarStyle = {
   blue: "bg-gold text-white",
 } as const;
 
-export function Testimonials() {
+function Stars({ rating }: { rating: 4 | 5 }) {
+  return (
+    <span aria-hidden className="tracking-[2px] text-sm">
+      <span className="text-sun">{"★".repeat(rating)}</span>
+      <span className="text-ink/20">{"★".repeat(5 - rating)}</span>
+    </span>
+  );
+}
+
+export function Testimonials({
+  testimonials = testimonialsIdf,
+}: {
+  testimonials?: Testimonial[];
+} = {}) {
   return (
     <section id="avis" className="section-y">
       <div className="container-wide">
@@ -41,9 +55,7 @@ export function Testimonials() {
               className="flex min-w-0 shrink-0 basis-[85%] snap-start flex-col gap-4 rounded-[20px] border border-ice bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-transparent hover:shadow-lg sm:basis-[55%] lg:basis-[calc((100%-48px)/3.2)]"
             >
               <div className="flex items-center justify-between">
-                <span aria-hidden className="tracking-[2px] text-sm text-sun">
-                  ★★★★★
-                </span>
+                <Stars rating={testimonial.rating} />
                 <span className="text-[10px] font-semibold tracking-[0.08em] text-ink/50 uppercase">
                   Google
                 </span>
